@@ -12,30 +12,55 @@
 
 #include "fractol.h"
 
-void	open_window(t_ptr *p)
+void	draw_pixel(int x, int y, t_ptr *p)
 {
-	p->mlx = mlx_init();
-	p->win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "Fract'ol");
-	if (p->win == NULL)
-		display_error_message(WINDOW_ERROR);
+	int		i;
+	t_point	*ptr;
+
+	ptr = p->point;
+	if (x >= 0 && x < SIZE_X && y >= 0 && y < SIZE_Y)
+	{
+		i = x * p->bpp + y * p->size_line;
+		p->addr[i] = p->color;
+		p->addr[++i] = p->color >> 8;
+		p->addr[++i] = p->color >> 16;
+	}
 }
 
-int		main(int argc, char **argv)
+void	draw_mandelbrot(t_ptr *p)
 {
-	t_ptr	p;
-	pid_t   pid;
+	double x;
+	double y;
+	int i;
 
-    pid = 1;
-    if (argc >= 2 && define_fractal(argv[1], &p))
-    {
-	    init_fractal(&p);
-	    open_window(&p);
-	    draw_fractal(&p);
-	//  mlx_hook(p.win, 2, 5, handle_key, &p);
-	//  mlx_hook(p.win, 17, 5, exit_fdf, &p);
-	    mlx_loop(p.mlx);
+	y = 0;
+	i = 0;
+	while (y < SIZE_Y)
+	{
+		x = 0;
+		while (x < SIZE_X)
+		{
+			while (i < p->iter_max)
+			{
+				
+			}
+			x++;
+		}
+		y++;
 	}
+}
+
+void	draw_fractal(t_ptr *p)
+{
+	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
+	p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
+	p->bpp /= 8;
+	if (p->fractal == MANDELBROT)
+		draw_mandelbrot(p);
+	else if (p->fractal == JULIA)
+		draw_julia(p);
 	else
-	    display_error_message(USAGE);
-	return (0);
+		draw_burningship(p);
+	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
+	mlx_destroy_image(p->mlx, p->img);
 }

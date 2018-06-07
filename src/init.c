@@ -29,20 +29,17 @@ void		init_fractal(t_ptr *p)
 {
 	p->color = 0xFFFFFF;
 	p->iter_max = 50;
-
-	if (p->fract_name == MANDELBROT)
-		init_mandelbrot(p);
-	else if (p->fract_name == JULIA)
-		init_julia(p);
-	else if (p->fract_name == BURNINGSHIP)
-		init_burningship(p);
-}
-
-void 	init_mandelbrot(t_ptr *p)
-{
 	p->min_real = -2.0;
 	p->max_real = 1.0;
 	p->min_imag = -1.2;
-	p->max_imag = 
-
+	p->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y/SIZE_X;
 }
+
+// void 	init_mandelbrot(t_ptr *p)
+// {
+// 	p->min_real = -2.0;
+// 	p->max_real = 1.0;
+// 	p->min_imag = -1.2;
+// 	p->max_imag = 1.0;
+
+// }

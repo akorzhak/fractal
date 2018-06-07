@@ -18,20 +18,21 @@ CFLAG = -Wall -Wextra -Werror
 
 LINKS = -lmlx -framework OpenGL -framework AppKit
 
-INC = -I ./includes -I ./libft -I /usr/local/include # -I ./minilibx_macos/include
+INC = -I ./includes -I ./libft -I ./minilibx_macos/include
 
 LIBDIR = libft
 
+MLXDIR = minilibx_macos
+
 LIBFT = $(LIBDIR)/libft.a
 
-LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
+LIBMLX = $(MLXDIR)/libmlx.a
+
+LIBS = -L ./minilibx_macos -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = fractol.c read_map.c add_point.c create_point.c\
-		center_map.c rotate_map.c project_map.c\
-		draw_image.c handle_key.c display_message.c\
-		connect_dots.c draw_pixel.c
+SRC = main.c init.c messages.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,8 +46,13 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LIBDIR)
 	@cp $(LIBFT) $(NAME)
+	@make -C $(MLXDIR)
+	@cp $(LIBMLX) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
-	@echo FdF compilation is \done :')'
+	@echo fractol compilation is \done
+	@echo
+	@echo run ./fractol [mandelbrot/julia/burningship]
+	@echo
 	@echo ----------NAVIGATION-----------
 	@echo -------------------------------
 	@echo '*' TO MODIFY THE MAP PRESS KEYS:  
@@ -62,12 +68,13 @@ $(NAME): $(OBJ)
 	@echo -------------------------------
 clean:
 	@make clean -C $(LIBDIR)
+	@make clean -C $(MLXDIR)
 	@/bin/rm -f $(OBJ) *~
-	@echo Object files have been cleaned.
+	@echo object files have been cleaned
 
 fclean: clean
 	@make fclean -C $(LIBDIR)
 	@/bin/rm -f $(NAME)
-	@echo FdF has been removed.
+	@echo fractol has been removed
 
 re: fclean all

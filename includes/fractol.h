@@ -19,20 +19,17 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define SIZE_X 1700
-# define SIZE_Y 1200
+# define SIZE_X 1000
+# define SIZE_Y 1000
 # define MANDELBROT 0
 # define JULIA 1
 # define BURNINGSHIP 2
 
-# define USAGE "Usage: /fractol [mandelbrot/julia/burningship]\n"
+# define USAGE "Usage: ./fractol [mandelbrot/julia/burningship]\n"
+# define WINDOW_ERROR "Error: Mlx window is failed to open.\n"
 
 typedef struct		s_fractal
 {
-	long double		min_real;
-	long double		max_real;
-	long double		min_imag;
-	long double		max_imag;
 	long double		z_real;
 	long double		z_imag;
 	long double		c_real;
@@ -52,23 +49,18 @@ typedef struct		s_ptr
 	int 			iter_max;
 	int				color;
 	char			*addr;
-	double			x;
-	double			y;
-	t_fractal		*fractal;
+	long double		min_real;
+	long double		max_real;
+	long double		min_imag;
+	long double		max_imag;
 }					t_ptr;
 
-int					ft_error(void);
-int					ft_usage(void);
-void				initialize_ptr(t_ptr *p);
-void				add_point(t_point **point, t_point *new);
-t_point				*create_point(int x, int y, char *z, t_ptr *p);
-void				center_map(t_ptr *p);
-void				rotate_map(t_point *ptr, t_ptr *p);
-void				project_map(t_point *ptr, t_ptr *p);
-void				draw_image(t_ptr *p);
-void				connect_dots(t_dot *d, t_ptr *p);
-void				draw_pixel(int x, int y, t_ptr *p);
-int					handle_key(int keycode, t_ptr *p);
-int					exit_fdf(t_ptr *p);
+int					main(int argc, char **argv);
+void 				display_error_message(char *message);
+void				display_message(char *message);
+int					define_fractal(char *name, t_ptr *p);
+void				init_fractal(t_ptr *p);
+
+
 
 #endif

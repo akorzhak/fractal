@@ -42,6 +42,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
+	@echo libft.a compilation is \done.
 clean:
 	@/bin/rm -f $(OBJ) *~
 fclean: clean

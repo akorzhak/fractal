@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int     display_error_message(char *message)
+void     display_error_message(char *message)
 {
     perror(message);
     exit(1);

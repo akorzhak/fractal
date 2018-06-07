@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = fractol
 
 C = gcc
 
@@ -18,7 +18,7 @@ CFLAG = -Wall -Wextra -Werror
 
 LINKS = -lmlx -framework OpenGL -framework AppKit
 
-INC = -I ./includes -I ./libft -I /usr/local/include
+INC = -I ./includes -I ./libft -I /usr/local/include # -I ./minilibx_macos/include
 
 LIBDIR = libft
 
@@ -28,7 +28,7 @@ LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = fdf.c read_map.c add_point.c create_point.c\
+SRC = fractol.c read_map.c add_point.c create_point.c\
 		center_map.c rotate_map.c project_map.c\
 		draw_image.c handle_key.c display_message.c\
 		connect_dots.c draw_pixel.c

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fractol.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,62 +21,42 @@
 
 # define SIZE_X 1700
 # define SIZE_Y 1200
+# define MANDELBROT 0
+# define JULIA 1
+# define BURNINGSHIP 2
 
-typedef struct		s_point
+# define USAGE "Usage: /fractol [mandelbrot/julia/burningship]\n"
+
+typedef struct		s_fractal
 {
-	double			x;
-	double			y;
-	double			z;
-	double			nx;
-	double			ny;
-	double			nz;
-	struct s_point	*next;
-}					t_point;
+	long double		min_real;
+	long double		max_real;
+	long double		min_imag;
+	long double		max_imag;
+	long double		z_real;
+	long double		z_imag;
+	long double		c_real;
+	long double		c_imag;
+}					t_fractal;
 
 typedef struct		s_ptr
 {
+	int 			fract_name;
 	void			*mlx;
 	void			*win;
 	void			*img;
-	int				fd;
-	int				i;
 	int				zoom;
 	int				bpp;
 	int				size_line;
 	int				end;
-	int				size_x;
-	int				size_y;
+	int 			iter_max;
 	int				color;
 	char			*addr;
 	double			x;
 	double			y;
-	double			a;
-	double			b;
-	double			lz;
-	double			lx;
-	char			perspective;
-	double			z;
-	double			minz;
-	t_point			*point;
+	t_fractal		*fractal;
 }					t_ptr;
 
-typedef struct		s_dot
-{
-	int				dx;
-	int				dy;
-	int				sx;
-	int				sy;
-	int				d;
-	int				d1;
-	int				d2;
-	double			x0;
-	double			y0;
-	double			x1;
-	double			y1;
-
-}					t_dot;
-
-int					read_map(char *map, t_ptr *p);
 int					ft_error(void);
 int					ft_usage(void);
 void				initialize_ptr(t_ptr *p);

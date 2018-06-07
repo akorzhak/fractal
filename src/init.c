@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fractol.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,42 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fractol.h"
 
-void	initialize_ptr(t_ptr *p)
+int		define_fractal(char *name, t_ptr *p)
 {
-	p->zoom = 61;
-	p->lz = 0.8;
-	p->lx = 1.1;
-	p->color = 0xFFFFFF;
-	p->size_x = SIZE_X / 2;
-	p->size_y = SIZE_Y / 2;
-	p->perspective = 0;
-	p->z = 0;
-	p->i = 0;
-	p->minz = 0;
+	if (ft_strcmp(name, "mandelbrot") == 0)
+		p->fract_name = MANDELBROT;
+	else if (ft_strcmp(name, "julia") == 0)
+		p->fract_name = JULIA;
+	else if (ft_strcmp(name, "burningship") == 0)
+		p->fract_name = BURNINGSHIP;
+	else
+		return (0);
+	return (1);
 }
 
-int		main(int argc, char **argv)
+void		init_fractal(t_ptr *p)
 {
-	t_ptr	p;
+	p->color = 0xFFFFFF;
+	p->iter_max = 50;
 
-	if (argc == 2)
-	{
-		p.y = 0;
-		p.point = NULL;
-		initialize_ptr(&p);
-		if (!read_map(argv[1], &p))
-			return (ft_error());
-		center_map(&p);
-		p.mlx = mlx_init();
-		p.win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "FdF");
-		draw_image(&p);
-		mlx_hook(p.win, 2, 5, handle_key, &p);
-		mlx_hook(p.win, 17, 5, exit_fdf, &p);
-		mlx_loop(p.mlx);
-	}
-	else
-		return (ft_usage());
-	return (0);
+	if (p->fract_name == MANDELBROT)
+		init_mandelbrot(p);
+	else if (p->fract_name == JULIA)
+		init_julia(p);
+	else if (p->fract_name == BURNINGSHIP)
+		init_burningship(p);
+}
+
+void 	init_mandelbrot(t_ptr *p)
+{
+	p->min_real = -2.0;
+	p->max_real = 1.0;
+	p->min_imag = -1.2;
+	p->max_imag = 
+
 }

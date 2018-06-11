@@ -15,22 +15,24 @@
 void	open_window(t_ptr *p)
 {
 	p->mlx = mlx_init();
-	p->win = mlx_new_window(p.mlx, SIZE_X, SIZE_Y, "Fract'ol");
+	p->win = mlx_new_window(p->mlx, SIZE_X, SIZE_Y, "Fract'ol");
 	if (p->win == NULL)
 		display_error_message(WINDOW_ERROR);
 }
 
 int		main(int argc, char **argv)
 {
-	t_ptr	p;
-	pid_t   pid;
+	t_ptr	    p;
+	t_fractal   f;
+//	pid_t   pid;
 
-    pid = 1;
+ //   pid = 1;
     if (argc >= 2 && define_fractal(argv[1], &p))
     {
-	    init_fractal(&p);
+        init_ptr(&p);
+	    init_fractal(&f);
 	    open_window(&p);
-	    draw_fractal(&p);
+	    draw_fractal(&p, &f);
 	//  mlx_hook(p.win, 2, 5, handle_key, &p);
 	//  mlx_hook(p.win, 17, 5, exit_fdf, &p);
 	    mlx_loop(p.mlx);

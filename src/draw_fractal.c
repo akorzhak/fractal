@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	draw_pixel(int x, int y, t_ptr *p)
+void	draw_pixel(t_ptr *p, t_fractal *f, int i)
 {
 	int		i;
 	t_point	*ptr;
@@ -27,40 +27,44 @@ void	draw_pixel(int x, int y, t_ptr *p)
 	}
 }
 
-void	draw_mandelbrot(t_ptr *p)
+void	draw_mandelbrot(t_ptr *p, t_fractal *f)
 {
-	double x;
-	double y;
-	int i;
+    int x;
+    int y;
+    int i;
+    double temp;
 
 	y = 0;
-	i = 0;
-	while (y < SIZE_Y)
+	while (y++ < SIZE_Y)
 	{
 		x = 0;
-		while (x < SIZE_X)
+		f->c_real = f->min_real;
+		while (x++ < SIZE_X)
 		{
-			while (i < p->iter_max)
+		    i = 0;
+			while (i++ < p->iter_max &&
+			(f->z_real * f->z_real + f->z_imag * f->z->imag) < f->infinit_border)
 			{
-				
+			    temp = fabs(f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real);
+                f->z_imag = fabs(2 * f->z_real * f->z_imag + f->c_imag);
+                f->z_real = temp;
 			}
-			x++;
+			f->z_squared = f->z_real * f->z_real + f->z_imag * f->z->imag;
+			draw_pixel(p, f, i);
+			f->c_real += c_real_step;
 		}
-		y++;
+		f->c_imag -= c_imag_step;
 	}
 }
 
-void	draw_fractal(t_ptr *p)
+void	draw_fractal(t_ptr *p, t_fractal *f)
 {
-	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
-	p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
-	p->bpp /= 8;
 	if (p->fractal == MANDELBROT)
-		draw_mandelbrot(p);
+		draw_mandelbrot(p, f);
 	else if (p->fractal == JULIA)
-		draw_julia(p);
+		draw_julia(p, f);
 	else
-		draw_burningship(p);
+		draw_burningship(p, f);
 	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
 	mlx_destroy_image(p->mlx, p->img);
 }

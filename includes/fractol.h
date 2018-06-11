@@ -30,11 +30,19 @@
 
 typedef struct		s_fractal
 {
-	long double		z_real;
-	long double		z_imag;
-	long double		c_real;
-	long double		c_imag;
-}					t_fractal;
+    double          z_squared;
+    double          z_real;
+    double          z_imag;
+    double          c_real;
+    double          c_imag;
+    double          c_real_step;
+    double          c_imag_step;
+    double	    	min_real;
+    double	    	max_real;
+    double	    	min_imag;
+    double		    max_imag;
+    double          infinit_border;
+}                   t_fractal
 
 typedef struct		s_ptr
 {
@@ -42,17 +50,14 @@ typedef struct		s_ptr
 	void			*mlx;
 	void			*win;
 	void			*img;
-	int				zoom;
+	double			zoom;
 	int				bpp;
 	int				size_line;
 	int				end;
 	int 			iter_max;
 	int				color;
 	char			*addr;
-	long double		min_real;
-	long double		max_real;
-	long double		min_imag;
-	long double		max_imag;
+
 }					t_ptr;
 
 int					main(int argc, char **argv);
@@ -60,6 +65,7 @@ void 				display_error_message(char *message);
 void				display_message(char *message);
 int					define_fractal(char *name, t_ptr *p);
 void				init_fractal(t_ptr *p);
+void	            draw_fractal(t_ptr *p);
 
 
 

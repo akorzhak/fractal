@@ -32,7 +32,7 @@ LIBS = -L ./minilibx_macos -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = main.c init.c messages.c
+SRC = main.c init.c messages.c draw_fractal.c
 
 OBJ = $(SRC:.c=.o)
 

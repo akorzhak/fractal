@@ -35,14 +35,26 @@ typedef struct		s_fractal
     double          z_imag;
     double          c_real;
     double          c_imag;
-    double          c_real_step;
-    double          c_imag_step;
+    // double          c_real_step;
+    // double          c_imag_step;
     double	    	min_real;
     double	    	max_real;
     double	    	min_imag;
     double		    max_imag;
     double          infinit_border;
-}                   t_fractal
+}                   t_fractal;
+
+typedef struct      s_color
+{
+    double          r_freq;
+    double          g_freq;
+    double          b_freq;
+    double          r_phase;
+    double          g_phase;
+    double          b_phase;
+    int             center;
+    int             delta;
+}                   t_color;
 
 typedef struct		s_ptr
 {
@@ -54,9 +66,10 @@ typedef struct		s_ptr
 	int				bpp;
 	int				size_line;
 	int				end;
+    int             iter;
 	int 			iter_max;
-	int				color;
 	char			*addr;
+    t_color         col;
 
 }					t_ptr;
 
@@ -64,9 +77,9 @@ int					main(int argc, char **argv);
 void 				display_error_message(char *message);
 void				display_message(char *message);
 int					define_fractal(char *name, t_ptr *p);
-void				init_fractal(t_ptr *p);
-void	            draw_fractal(t_ptr *p);
-
+void				init_fractal(t_fractal *f);
+void                init_ptr(t_ptr *p);
+void                draw_fractal(t_ptr *p, t_fractal *f);
 
 
 #endif

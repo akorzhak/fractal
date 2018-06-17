@@ -25,29 +25,41 @@ int		define_fractal(char *name, t_ptr *p)
 	return (1);
 }
 
+void		init_color(t_ptr *p)
+{
+	p->col.r_freq = 0.01;
+	p->col.g_freq = 0.013;
+	p->col.b_freq = 0.016;
+	p->col.r_phase = 0.1;
+	p->col.g_phase = 0.2;
+	p->col.b_phase = 0.4;
+	p->col.center = 230;
+	p->col.delta = 25;
+}
+
 void		init_ptr(t_ptr *p)
 {
-	p->color = 0xFFFFFF;
-	p->iter_max = 50;
+	p->iter_max = 100;
 	p->zoom = 1.0;
 	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
     p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
     p->bpp /= 8;
+    init_color(p);
 }
 
 void        init_fractal(t_fractal *f)
 {
-    f->min_real = -2.0;
-    f->max_real = 1.0;
+    f->min_real = -2.1;
+    f->max_real = 1.1;
     f->min_imag = -1.2;
-    f->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y / SIZE_X;
+    f->max_imag = f->min_imag + (f->max_real - f->min_real) * SIZE_Y / SIZE_X;
     f->z_real = 0.0;
     f->z_imag = 0.0;
     f->c_real = f->min_real;
     f->c_imag = f->max_imag;
     f->infinit_border = 4.0;
-    f->c_real_step = (f->max_real - f->min_real) / SIZE_X;
-    f->c_imag_step = (f->max_imag - f->min_imag) / SIZE_Y;
+    // f->c_real_step = (f->max_real - f->min_real) / SIZE_X;
+    // f->c_imag_step = (f->max_imag - f->min_imag) / SIZE_Y;
 }
 
 // void 	init_mandelbrot(t_ptr *p)

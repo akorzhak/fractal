@@ -18,17 +18,15 @@ CFLAG = -Wall -Wextra -Werror
 
 LINKS = -lmlx -framework OpenGL -framework AppKit
 
-INC = -I ./includes -I ./libft -I ./minilibx_macos/include
+INC = -I ./includes -I ./libft -I /usr/local/include
 
 LIBDIR = libft
-
-MLXDIR = minilibx_macos
 
 LIBFT = $(LIBDIR)/libft.a
 
 LIBMLX = $(MLXDIR)/libmlx.a
 
-LIBS = -L ./minilibx_macos -lmlx -L ./libft -lft
+LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
 
 SRCDIR = src
 
@@ -46,8 +44,6 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LIBDIR)
 	@cp $(LIBFT) $(NAME)
-	@make -C $(MLXDIR)
-	@cp $(LIBMLX) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
 	@echo fractol compilation is \done
 	@echo
@@ -68,7 +64,6 @@ $(NAME): $(OBJ)
 	@echo -------------------------------
 clean:
 	@make clean -C $(LIBDIR)
-	@make clean -C $(MLXDIR)
 	@/bin/rm -f $(OBJ) *~
 	@echo object files have been cleaned
 

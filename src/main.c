@@ -30,9 +30,9 @@ int		main(int argc, char **argv)
     if (argc >= 2 && define_fractal(argv[1], &p))
     {
         init_ptr(&p);
-	    init_fractal(&f);
+	    init_fractal(&f, &p);
 	    open_window(&p);
-	    draw_fractal(&p, &f);
+	    draw_image(&p, &f);
 	//  mlx_hook(p.win, 2, 5, handle_key, &p);
 	//  mlx_hook(p.win, 17, 5, exit_fdf, &p);
 	    mlx_loop(p.mlx);

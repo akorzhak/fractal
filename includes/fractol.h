@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define SIZE_X 1000
-# define SIZE_Y 1000
+# define SIZE_X 1200
+# define SIZE_Y 900
 # define MANDELBROT 0
 # define JULIA 1
 # define BURNINGSHIP 2
@@ -77,9 +77,9 @@ int					main(int argc, char **argv);
 void 				display_error_message(char *message);
 void				display_message(char *message);
 int					define_fractal(char *name, t_ptr *p);
-void				init_fractal(t_fractal *f);
+void                init_fractal(t_fractal *f, t_ptr *p);
 void                init_ptr(t_ptr *p);
-void                draw_fractal(t_ptr *p, t_fractal *f);
+void                draw_image(t_ptr *p, t_fractal *f);
 
 
 #endif

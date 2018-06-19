@@ -47,16 +47,20 @@ void		init_ptr(t_ptr *p)
     init_color(p);
 }
 
-void        init_fractal(t_fractal *f)
+void        init_fractal(t_fractal *f, t_ptr *p)
 {
+	if (p->fract_name == MANDELBROT)
+	{
+    	f->max_real = 1.1;
+    	f->min_imag = -1.2;
+    }
+    else if (p->fract_name == BURNINGSHIP)
+    {
+    	f->max_real = 1.0;
+    	f->min_imag = -1.6;
+    }
     f->min_real = -2.1;
-    f->max_real = 1.1;
-    f->min_imag = -1.2;
     f->max_imag = f->min_imag + (f->max_real - f->min_real) * SIZE_Y / SIZE_X;
-    f->z_real = 0.0;
-    f->z_imag = 0.0;
-    f->c_real = f->min_real;
-    f->c_imag = f->max_imag;
     f->infinit_border = 4.0;
     // f->c_real_step = (f->max_real - f->min_real) / SIZE_X;
     // f->c_imag_step = (f->max_imag - f->min_imag) / SIZE_Y;

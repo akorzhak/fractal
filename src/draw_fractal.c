@@ -42,9 +42,34 @@ void	draw_pixel(int x, int y, t_ptr *p, t_fractal *f)
 
 void	draw_mandelbrot(t_ptr *p, t_fractal *f)
 {
+	double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	{
+		temp = f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real;
+        f->z_imag = 2 * f->z_real * f->z_imag + f->c_imag;
+        f->z_real = temp;
+	}
+}
+
+void	draw_burningship(t_ptr *p, t_fractal *f)
+{
+    double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	{
+		temp = f->z_imag;
+        f->z_imag = fabs(2 * f->z_real * f->z_imag + f->c_imag);
+        f->z_real = fabs(f->z_real * f->z_real - temp * temp + f->c_real);
+	}	
+}
+
+void	draw_fractal(t_ptr *p, t_fractal *f)
+{
     int x;
     int y;
-    double temp;
 
 	y = 0;
 	while (y++ < SIZE_Y)
@@ -57,26 +82,18 @@ void	draw_mandelbrot(t_ptr *p, t_fractal *f)
 		    p->iter = 0;
 		    f->z_real = f->c_real;
 		    f->z_imag = f->c_imag;
-			while ((p->iter)++ < p->iter_max &&
-			(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
-			{
-			    temp = f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real;
-                f->z_imag = 2 * f->z_real * f->z_imag + f->c_imag;
-                f->z_real = temp;
-			}
+		    if (p->fract_name == MANDELBROT)
+		    	draw_mandelbrot(p, f);
+		    else if (p->fract_name == BURNINGSHIP)
+		    	draw_burningship(p, f);
 			draw_pixel(x, y, p, f);
 		}		
 	}
 }
 
-void	draw_fractal(t_ptr *p, t_fractal *f)
+void	draw_image(t_ptr *p, t_fractal *f)
 {
-	if (p->fract_name == MANDELBROT)
-		draw_mandelbrot(p, f);
-//	else if (p->fractal == JULIA)
-//		draw_julia(p, f);
-//	else
-//		draw_burningship(p, f);
+	draw_fractal(p, f);
 	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
 	mlx_destroy_image(p->mlx, p->img);
 }

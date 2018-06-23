@@ -40,6 +40,47 @@ void	draw_pixel(int x, int y, t_ptr *p, t_fractal *f)
 	}
 }
 
+void	draw_buffalo(t_ptr *p, t_fractal *f)
+{
+	double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	{
+		temp = fabs(f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real);
+        f->z_imag = fabs(2 * f->z_real * f->z_imag - f->z_imag + f->c_imag);
+        f->z_real = temp;
+	}
+}
+
+void	draw_drop(t_ptr *p, t_fractal *f)
+{
+	double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	{
+		temp = f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real /
+				(f->c_real * f->c_real + f->c_imag * f->c_imag);
+        f->z_imag = 2 * f->z_real * f->z_imag - f->c_imag /
+        		(f->c_real * f->c_real + f->c_imag * f->c_imag);
+        f->z_real = temp;
+	}
+}
+
+void	draw_julia(t_ptr *p, t_fractal *f)
+{
+	double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	{
+		temp = f->z_real * f->z_real - f->z_imag * f->z_imag;
+        f->z_imag = 2 * f->z_real * f->z_imag + f->c_imag;
+        f->z_real = temp;
+	}
+}
+
 void	draw_mandelbrot(t_ptr *p, t_fractal *f)
 {
 	double temp;
@@ -75,17 +116,21 @@ void	draw_fractal(t_ptr *p, t_fractal *f)
 	while (y++ < SIZE_Y)
 	{
 		x = 0;
-		f->c_imag = f->max_imag - y * (f->max_imag - f->min_imag) / (SIZE_Y - 1);
 		while (x++ < SIZE_X)
 		{
-			f->c_real = f->min_real + x * (f->max_real - f->min_real) / (SIZE_X - 1);
-		    p->iter = 0;
-		    f->z_real = f->c_real;
-		    f->z_imag = f->c_imag;
+			init_factors(x, y, p, f);
 		    if (p->fract_name == MANDELBROT)
 		    	draw_mandelbrot(p, f);
 		    else if (p->fract_name == BURNINGSHIP)
 		    	draw_burningship(p, f);
+		    else if (p->fract_name == JULIA)
+		    	draw_julia(p,f);
+		    else if (p->fract_name == BUFFALO)
+		    	draw_buffalo(p,f);
+		    else if (p->fract_name == DROP)
+		    	draw_drop(p,f);
+		    else if (p->fract_name == TRICORN)
+		    	draw_tricorn(p,f);
 			draw_pixel(x, y, p, f);
 		}		
 	}

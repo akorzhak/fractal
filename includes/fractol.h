@@ -24,6 +24,9 @@
 # define MANDELBROT 0
 # define JULIA 1
 # define BURNINGSHIP 2
+# define BUFFALO 3
+# define DROP 4
+# define TRICORN 5
 
 # define USAGE "Usage: ./fractol [mandelbrot/julia/burningship]\n"
 # define WINDOW_ERROR "Error: Mlx window is failed to open.\n"
@@ -35,8 +38,6 @@ typedef struct		s_fractal
     double          z_imag;
     double          c_real;
     double          c_imag;
-    // double          c_real_step;
-    // double          c_imag_step;
     double	    	min_real;
     double	    	max_real;
     double	    	min_imag;
@@ -80,6 +81,7 @@ int					define_fractal(char *name, t_ptr *p);
 void                init_fractal(t_fractal *f, t_ptr *p);
 void                init_ptr(t_ptr *p);
 void                draw_image(t_ptr *p, t_fractal *f);
+void                init_factors(int x, int y, t_ptr *p, t_fractal *f);
 
 
 #endif

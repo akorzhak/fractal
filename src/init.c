@@ -20,12 +20,18 @@ int		define_fractal(char *name, t_ptr *p)
 		p->fract_name = JULIA;
 	else if (ft_strcmp(name, "burningship") == 0)
 		p->fract_name = BURNINGSHIP;
+	else if (ft_strcmp(name, "buffalo") == 0)
+		p->fract_name = BUFFALO;
+	else if (ft_strcmp(name, "drop") == 0)
+		p->fract_name = DROP;
+	else if (ft_strcmp(name, "tricorn") == 0)
+		p->fract_name = TRICORN;
 	else
 		return (0);
 	return (1);
 }
 
-void		init_color(t_ptr *p)
+void	init_color(t_ptr *p)
 {
 	p->col.r_freq = 0.01;
 	p->col.g_freq = 0.013;
@@ -37,7 +43,7 @@ void		init_color(t_ptr *p)
 	p->col.delta = 25;
 }
 
-void		init_ptr(t_ptr *p)
+void	init_ptr(t_ptr *p)
 {
 	p->iter_max = 100;
 	p->zoom = 1.0;
@@ -47,7 +53,7 @@ void		init_ptr(t_ptr *p)
     init_color(p);
 }
 
-void        init_fractal(t_fractal *f, t_ptr *p)
+void	init_fractal(t_fractal *f, t_ptr *p)
 {
 	if (p->fract_name == MANDELBROT)
 	{
@@ -59,18 +65,21 @@ void        init_fractal(t_fractal *f, t_ptr *p)
     	f->max_real = 1.0;
     	f->min_imag = -1.6;
     }
+    else
+    {
+    	f->max_real = 2.6;
+    	f->min_imag = 2.0;
+    }
     f->min_real = -2.1;
     f->max_imag = f->min_imag + (f->max_real - f->min_real) * SIZE_Y / SIZE_X;
     f->infinit_border = 4.0;
-    // f->c_real_step = (f->max_real - f->min_real) / SIZE_X;
-    // f->c_imag_step = (f->max_imag - f->min_imag) / SIZE_Y;
 }
 
-// void 	init_mandelbrot(t_ptr *p)
-// {
-// 	p->min_real = -2.0;
-// 	p->max_real = 1.0;
-// 	p->min_imag = -1.2;
-// 	p->max_imag = 1.0;
-
-// }
+void	init_factors(int x, int y, t_ptr *p, t_fractal *f)
+{
+	f->c_imag = f->max_imag - y * (f->max_imag - f->min_imag) / (SIZE_Y - 1);
+	f->c_real = f->min_real + x * (f->max_real - f->min_real) / (SIZE_X - 1);
+	p->iter = 0;
+	f->z_real = f->c_real;
+	f->z_imag = f->c_imag;
+}

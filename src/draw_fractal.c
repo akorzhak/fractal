@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	draw_pixel(int x, int y, t_ptr *p, t_fractal *f)
+void	draw_pixel(int x, int y, t_ptr *p)
 {
 	int		i;
 	double	zn;
@@ -23,7 +23,7 @@ void	draw_pixel(int x, int y, t_ptr *p, t_fractal *f)
 	i = x * p->bpp + y * p->size_line;
 	if (p->iter < p->iter_max)
 	{
-		zn = sqrt(f->z_real * f->z_real + f->z_imag * f->z_imag);
+		zn = sqrt(p->z_real * p->z_real + p->z_imag * p->z_imag);
 		index = p->iter + 1 - (log(2) / zn) / log(2);
 		p->addr[i] = sin(p->col.b_freq * index + p->col.b_phase)
 					* p->col.center * p->col.delta;
@@ -40,74 +40,87 @@ void	draw_pixel(int x, int y, t_ptr *p, t_fractal *f)
 	}
 }
 
-void	draw_buffalo(t_ptr *p, t_fractal *f)
+void	draw_tricorn(t_ptr *p)
 {
 	double temp;
 
 	while ((p->iter)++ < p->iter_max &&
-	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
-		temp = fabs(f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real);
-        f->z_imag = fabs(2 * f->z_real * f->z_imag - f->z_imag + f->c_imag);
-        f->z_real = temp;
+		temp = p->z_real * p->z_real - p->z_imag * p->z_imag + p->c_real;
+        p->z_imag = -2 * p->z_real * p->z_imag + p->c_imag;
+        p->z_real = temp;
 	}
 }
 
-void	draw_drop(t_ptr *p, t_fractal *f)
+void	draw_buffalo(t_ptr *p)
 {
 	double temp;
 
 	while ((p->iter)++ < p->iter_max &&
-	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
-		temp = f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real /
-				(f->c_real * f->c_real + f->c_imag * f->c_imag);
-        f->z_imag = 2 * f->z_real * f->z_imag - f->c_imag /
-        		(f->c_real * f->c_real + f->c_imag * f->c_imag);
-        f->z_real = temp;
+		temp = fabs(p->z_real * p->z_real - p->z_imag * p->z_imag + p->c_real);
+        p->z_imag = fabs(2 * p->z_real * p->z_imag - p->z_imag + p->c_imag);
+        p->z_real = temp;
 	}
 }
 
-void	draw_julia(t_ptr *p, t_fractal *f)
+void	draw_drop(t_ptr *p)
 {
 	double temp;
 
 	while ((p->iter)++ < p->iter_max &&
-	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
-		temp = f->z_real * f->z_real - f->z_imag * f->z_imag;
-        f->z_imag = 2 * f->z_real * f->z_imag + f->c_imag;
-        f->z_real = temp;
+		temp = p->z_real * p->z_real - p->z_imag * p->z_imag + p->c_real /
+				(p->c_real * p->c_real + p->c_imag * p->c_imag);
+        p->z_imag = 2 * p->z_real * p->z_imag - p->c_imag /
+        		(p->c_real * p->c_real + p->c_imag * p->c_imag);
+        p->z_real = temp;
 	}
 }
 
-void	draw_mandelbrot(t_ptr *p, t_fractal *f)
+void	draw_julia(t_ptr *p)
 {
 	double temp;
 
 	while ((p->iter)++ < p->iter_max &&
-	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
-		temp = f->z_real * f->z_real - f->z_imag * f->z_imag + f->c_real;
-        f->z_imag = 2 * f->z_real * f->z_imag + f->c_imag;
-        f->z_real = temp;
+		temp = p->z_real * p->z_real - p->z_imag * p->z_imag;
+        p->z_imag = 2 * p->z_real * p->z_imag + p->c_imag;
+        p->z_real = temp + p->c_real;
 	}
 }
 
-void	draw_burningship(t_ptr *p, t_fractal *f)
+void	draw_mandelbrot(t_ptr *p)
+{
+	double temp;
+
+	while ((p->iter)++ < p->iter_max &&
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
+	{
+		temp = p->z_real * p->z_real - p->z_imag * p->z_imag + p->c_real;
+        p->z_imag = 2 * p->z_real * p->z_imag + p->c_imag;
+        p->z_real = temp;
+	}
+}
+
+void	draw_burningship(t_ptr *p)
 {
     double temp;
 
 	while ((p->iter)++ < p->iter_max &&
-	(f->z_real * f->z_real + f->z_imag * f->z_imag) < f->infinit_border)
+	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
-		temp = f->z_imag;
-        f->z_imag = fabs(2 * f->z_real * f->z_imag + f->c_imag);
-        f->z_real = fabs(f->z_real * f->z_real - temp * temp + f->c_real);
+		temp = p->z_imag;
+        p->z_imag = fabs(2 * p->z_real * p->z_imag + p->c_imag);
+        p->z_real = fabs(p->z_real * p->z_real - temp * temp + p->c_real);
 	}	
 }
 
-void	draw_fractal(t_ptr *p, t_fractal *f)
+void	draw_fractal(t_ptr *p)
 {
     int x;
     int y;
@@ -118,27 +131,27 @@ void	draw_fractal(t_ptr *p, t_fractal *f)
 		x = 0;
 		while (x++ < SIZE_X)
 		{
-			init_factors(x, y, p, f);
+			init_factors(x, y, p);
 		    if (p->fract_name == MANDELBROT)
-		    	draw_mandelbrot(p, f);
+		    	draw_mandelbrot(p);
 		    else if (p->fract_name == BURNINGSHIP)
-		    	draw_burningship(p, f);
+		    	draw_burningship(p);
 		    else if (p->fract_name == JULIA)
-		    	draw_julia(p,f);
+		    	draw_julia(p);
 		    else if (p->fract_name == BUFFALO)
-		    	draw_buffalo(p,f);
+		    	draw_buffalo(p);
 		    else if (p->fract_name == DROP)
-		    	draw_drop(p,f);
+		    	draw_drop(p);
 		    else if (p->fract_name == TRICORN)
-		    	draw_tricorn(p,f);
-			draw_pixel(x, y, p, f);
+		    	draw_tricorn(p);
+			draw_pixel(x, y, p);
 		}		
 	}
 }
 
-void	draw_image(t_ptr *p, t_fractal *f)
+void	draw_image(t_ptr *p)
 {
-	draw_fractal(p, f);
+	draw_fractal(p);
 	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
 	mlx_destroy_image(p->mlx, p->img);
 }

@@ -45,41 +45,52 @@ void	init_color(t_ptr *p)
 
 void	init_ptr(t_ptr *p)
 {
-	p->iter_max = 100;
-	p->zoom = 1.0;
+	p->mlx = mlx_init();
 	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
     p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
     p->bpp /= 8;
+    p->iter_max = 100;
+	p->zoom = 1.0;
     init_color(p);
 }
 
-void	init_fractal(t_fractal *f, t_ptr *p)
+void	init_fractal(t_ptr *p)
 {
 	if (p->fract_name == MANDELBROT)
 	{
-    	f->max_real = 1.1;
-    	f->min_imag = -1.2;
+    	p->max_real = 1.1;
+    	p->min_imag = -1.2;
     }
     else if (p->fract_name == BURNINGSHIP)
     {
-    	f->max_real = 1.0;
-    	f->min_imag = -1.6;
+    	p->max_real = 1.0;
+    	p->min_imag = -1.6;
     }
     else
     {
-    	f->max_real = 2.6;
-    	f->min_imag = 2.0;
+    	p->max_real = 2.6;
+    	p->min_imag = -2.0;
     }
-    f->min_real = -2.1;
-    f->max_imag = f->min_imag + (f->max_real - f->min_real) * SIZE_Y / SIZE_X;
-    f->infinit_border = 4.0;
+    p->min_real = -2.1;
+    p->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y / SIZE_X;
+    p->infinit_border = 4.0;
 }
 
-void	init_factors(int x, int y, t_ptr *p, t_fractal *f)
+void	init_factors(int x, int y, t_ptr *p)
 {
-	f->c_imag = f->max_imag - y * (f->max_imag - f->min_imag) / (SIZE_Y - 1);
-	f->c_real = f->min_real + x * (f->max_real - f->min_real) / (SIZE_X - 1);
+	
 	p->iter = 0;
-	f->z_real = f->c_real;
-	f->z_imag = f->c_imag;
+	if (p->fract_name == JULIA)
+	{
+		p->c_imag = 0.27015;
+		p->c_real = -0.7;
+		p->z_real = 1.5 * (x - SIZE_X / 2) / (0.5 * p->zoom * SIZE_X);
+        p->z_imag = 1.0 * (y - SIZE_Y / 2) / (0.5 * p->zoom * SIZE_Y);
+	}
+	else
+	{	p->c_imag = p->max_imag - y * (p->max_imag - p->min_imag) / (SIZE_Y - 1);
+		p->c_real = p->min_real + x * (p->max_real - p->min_real) / (SIZE_X - 1);
+		p->z_real = p->c_real;
+		p->z_imag = p->c_imag;
+	}
 }

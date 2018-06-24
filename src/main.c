@@ -28,16 +28,14 @@ int		main(int argc, char **argv)
  //   pid = 1;
     if (argc >= 2 && define_fractal(argv[1], &p))
     {
-    	p.mlx = mlx_init();
         init_ptr(&p);
 	    init_fractal(&p);
 	    open_window(&p);
 	    draw_image(&p);
-		// mlx_hook(p.win, 2, 5, key_hook, &p);
-		// mlx_mouse_hook(p.win, mouse_hook, &p);
-		// mlx_hook(t.m.win, 6, 5, mouse_mot, &p);
-		// mlx_hook(t.m.win, 17, 5, exit_x, &);
-		// mlx_loop(t.m.mlx);
+		mlx_hook(p.win, 2, 5, key_hook, &p);
+		mlx_mouse_hook(p.win, mouse_hook, &p);
+		mlx_hook(p.win, 6, 5, mouse_mot, &p);
+		mlx_hook(t.m.win, 17, 5, exit_x, &p);
 	    mlx_loop(p.mlx);
 	}
 	else

@@ -41,6 +41,7 @@ typedef struct      s_color
     double          b_phase;
     int             center;
     int             delta;
+    int             variant;
 }                   t_color;
 
 typedef struct		s_ptr
@@ -56,7 +57,8 @@ typedef struct		s_ptr
     int             iter;
 	int 			iter_max;
 	char			*addr;
-    t_color         col;
+    double          mx;
+    double          my;
     double          z_real;
     double          z_imag;
     double          c_real;
@@ -66,7 +68,7 @@ typedef struct		s_ptr
     double          min_imag;
     double          max_imag;
     double          infinit_border;
-
+    t_color         col;
 }					t_ptr;
 
 int					main(int argc, char **argv);

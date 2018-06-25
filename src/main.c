@@ -6,7 +6,7 @@
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 06:06:11 by akorzhak          #+#    #+#             */
-/*   Updated: 2018/06/25 06:06:14 by akorzhak         ###   ########.fr       */
+/*   Updated: 2018/06/25 06:31:46 by akorzhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		main(int argc, char **argv)
 	else
 	{
 		display_error_message("Usage: ./fractol\
-					[mandelbrot/julia/burningship/buffalo/tricorn/drop]\n");
+		[mandelbrot/julia/burningship/buffalo/tricorn/drop]\n");
 	}
 	return (0);
 }

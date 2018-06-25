@@ -30,8 +30,8 @@ LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = main.c init.c messages.c draw_fractal.c key_hooks.c mouse_hooks.c\
-		description_in_window.c
+SRC = main.c init.c messages.c draw_util.c key_hooks.c mouse_hooks.c\
+		description_in_window.c basic_fractals.c additionary_fractals.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -48,21 +48,7 @@ $(NAME): $(OBJ)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
 	@echo fractol compilation is \done
 	@echo
-	@echo run ./fractol [mandelbrot/julia/burningship]
-	@echo
-	@echo ----------NAVIGATION-----------
-	@echo -------------------------------
-	@echo '*' TO MODIFY THE MAP PRESS KEYS:  
-	@echo '*' ASWD	- MOVE			  
-	@echo '*' ARROWS - ROTATE 			  
-	@echo '*' P - CHANGE PROJECTION 
-	@echo '*' + - ENLARGE			  
-	@echo '*' - - REDUCE 	
-	@echo '*' PGUP, PGDN - CHANGE ALTITUDE	 			  
-	@echo '*' ENTER - CHANGE COLORS	  
-	@echo '*' SPACE - RESET			 
-	@echo '*' ESC - CLOSE
-	@echo -------------------------------
+	@echo To run fractol: ./fractol [mandelbrot/julia/burningship/buffalo/tricorn/drop]
 clean:
 	@make clean -C $(LIBDIR)
 	@/bin/rm -f $(OBJ) *~

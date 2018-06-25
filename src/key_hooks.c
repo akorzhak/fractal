@@ -1,8 +1,18 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_hooks.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 06:02:06 by akorzhak          #+#    #+#             */
+/*   Updated: 2018/06/25 06:02:09 by akorzhak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 
-static void 	change_color1(t_ptr *p)
+static void		change_color1(t_ptr *p)
 {
 	if (p->col.variant == 2)
 	{
@@ -10,10 +20,8 @@ static void 	change_color1(t_ptr *p)
 		p->col.g_freq = 0.012;
 		p->col.b_freq = 0.00812;
 		p->col.r_phase = 0.01;
-		p->col.g_phase = 0.002;
 		p->col.b_phase = 0.04;
 		p->col.center = 200;
-		p->col.delta = 2;
 		p->col.variant = 3;
 	}
 	else
@@ -43,7 +51,6 @@ static void		change_color(t_ptr *p)
 		p->col.g_phase = 0.002;
 		p->col.b_phase = 0.004;
 		p->col.center = 830;
-		p->col.delta = 2;
 		p->col.variant = 2;
 	}
 	else
@@ -56,7 +63,6 @@ static void		move_image(int key, t_ptr *p)
 	{
 		(p->zoom >= 1) ? p->my -= 0.1 / p->zoom : 0;
 		(p->zoom < 1) ? p->my -= 0.1 * p->zoom : 0;
-
 	}
 	else if (key == 125)
 	{
@@ -86,12 +92,6 @@ static void		change_fractal(int key, t_ptr *p)
 	init_fractal(p);
 }
 
-void 			reset_changes(t_ptr *p)
-{
-	init_ptr(p);
-	init_fractal(p);
-}
-
 int				key_hook(int key, t_ptr *p)
 {
 	if (key == 53)
@@ -104,7 +104,11 @@ int				key_hook(int key, t_ptr *p)
 	key == 36 ? change_color(p) : 0;
 	key == 69 && p->iter_max < 500 ? p->iter_max += 20 : 0;
 	key == 78 && p->iter_max > 30 ? p->iter_max -= 20 : 0;
-	key == 49 ? reset_changes(p) : 0;
+	if (key == 49)
+	{
+		init_ptr(p);
+		init_fractal(p);
+	}
 	draw_image(p);
 	return (0);
 }

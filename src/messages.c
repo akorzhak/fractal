@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.c                                              :+:      :+:    :+:   */
+/*   messages.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 15:23:41 by akorzhak          #+#    #+#             */
-/*   Updated: 2018/03/04 14:23:33 by akorzhak         ###   ########.fr       */
+/*   Created: 2018/06/25 06:05:43 by akorzhak          #+#    #+#             */
+/*   Updated: 2018/06/25 06:05:46 by akorzhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void     display_error_message(char *message)
+void	display_error_message(char *message)
 {
-    perror(message);
-    exit(1);
+	perror(message);
+	exit(1);
 }

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   description_in_window.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 05:58:22 by akorzhak          #+#    #+#             */
+/*   Updated: 2018/06/25 05:58:27 by akorzhak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 
@@ -21,7 +32,8 @@ void	put_description_to_window(t_ptr *p)
 	mlx_string_put(p->mlx, p->win, 15, 55, 0xffffff, "change color: Enter");
 	mlx_string_put(p->mlx, p->win, 15, 80, 0xffffff, "zoom: Mouse wheel");
 	mlx_string_put(p->mlx, p->win, 15, 105, 0xffffff, "move: Arrows");
-	mlx_string_put(p->mlx, p->win, 15, 130, 0xffffff, "change iterations: + / -");
+	mlx_string_put(p->mlx, p->win, 15, 130, 0xffffff,
+		"change iterations: + / -");
 	mlx_string_put(p->mlx, p->win, 15, 155, 0xffffff, "reset: Space");
 	mlx_string_put(p->mlx, p->win, 15, 180, 0xffffff, "exit: Esc");
 }

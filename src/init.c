@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.c                                              :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akorzhak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 15:23:41 by akorzhak          #+#    #+#             */
-/*   Updated: 2018/03/04 14:23:33 by akorzhak         ###   ########.fr       */
+/*   Created: 2018/06/25 05:59:29 by akorzhak          #+#    #+#             */
+/*   Updated: 2018/06/25 05:59:31 by akorzhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,47 +47,49 @@ void	init_color(t_ptr *p)
 void	init_ptr(t_ptr *p)
 {
 	p->mlx = mlx_init();
-    p->iter_max = 100;
-    p->zoom = 1;
+	p->iter_max = 100;
+	p->zoom = 1;
 	p->mx = 0.0;
 	p->my = 0.0;
 	p->infinit_border = 4.0;
-    init_color(p);
+	init_color(p);
 }
 
 void	init_fractal(t_ptr *p)
 {
 	if (p->fract_name == MANDELBROT || p->fract_name == BUFFALO)
 	{
-    	p->max_real = 1.1;
-    	p->min_imag = -1.2;
-    }
-    else if (p->fract_name == BURNINGSHIP)
-    {
-    	p->max_real = 1.0;
-    	p->min_imag = -1.6;
-    }
-    else if (p->fract_name == JULIA)
-    {
-    	p->max_real = 2.2;
-    	p->min_imag = -1.6;
-    }
-    else
-    {
-    	p->max_real = 1.8;
-    	p->min_imag = -1.6;
-    }
-    p->min_real = -2.1;
-    p->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y / SIZE_X;
-    p->j_real = -0.4;
+		p->max_real = 1.1;
+		p->min_imag = -1.2;
+	}
+	else if (p->fract_name == BURNINGSHIP)
+	{
+		p->max_real = 1.0;
+		p->min_imag = -1.6;
+	}
+	else if (p->fract_name == JULIA)
+	{
+		p->max_real = 2.2;
+		p->min_imag = -1.6;
+	}
+	else
+	{
+		p->max_real = 1.8;
+		p->min_imag = -1.6;
+	}
+	p->min_real = -2.1;
+	p->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y / SIZE_X;
+	p->j_real = -0.4;
 	p->j_imag = 0.6;
 }
 
 void	init_factors(int x, int y, t_ptr *p)
-{	
+{
 	p->iter = 0;
-	p->c_imag = p->max_imag - y * (p->max_imag - p->min_imag) / (SIZE_Y - 1) + p->my;
-	p->c_real = p->min_real + x * (p->max_real - p->min_real) / (SIZE_X - 1) + p->mx;
+	p->c_imag = p->max_imag - y
+				* (p->max_imag - p->min_imag) / (SIZE_Y - 1) + p->my;
+	p->c_real = p->min_real + x
+				* (p->max_real - p->min_real) / (SIZE_X - 1) + p->mx;
 	p->z_real = p->c_real;
 	p->z_imag = p->c_imag;
 }

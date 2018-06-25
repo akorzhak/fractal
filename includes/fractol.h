@@ -28,7 +28,7 @@
 # define DROP 4
 # define TRICORN 5
 
-# define USAGE "Usage: ./fractol [mandelbrot/julia/burningship]\n"
+# define USAGE "Usage: ./fractol [mandelbrot/julia/burningship/buffalo/tricorn/drop]\n"
 # define WINDOW_ERROR "Error: Mlx window is failed to open.\n"
 
 typedef struct      s_color
@@ -50,7 +50,7 @@ typedef struct		s_ptr
 	void			*mlx;
 	void			*win;
 	void			*img;
-	double			zoom;
+	int		      	zoom;
 	int				bpp;
 	int				size_line;
 	int				end;
@@ -63,6 +63,8 @@ typedef struct		s_ptr
     double          z_imag;
     double          c_real;
     double          c_imag;
+    double          j_real;
+    double          j_imag;
     double          min_real;
     double          max_real;
     double          min_imag;
@@ -79,6 +81,11 @@ void                init_fractal(t_ptr *p);
 void                init_ptr(t_ptr *p);
 void                draw_image(t_ptr *p);
 void                init_factors(int x, int y, t_ptr *p);
+int                 key_hook(int key, t_ptr *p);
+void                init_color(t_ptr *p);
+int                 mouse_hook(int button, int x, int y, t_ptr *p);
+int                 julia_vary(int x, int y, t_ptr *p);
+void                put_description_to_window(t_ptr *p);
 
 
 #endif

@@ -30,7 +30,8 @@ LIBS = -L /usr/local/lib/ -lmlx -L ./libft -lft
 
 SRCDIR = src
 
-SRC = main.c init.c messages.c draw_fractal.c key_hooks.c
+SRC = main.c init.c messages.c draw_fractal.c key_hooks.c mouse_hooks.c\
+		description_in_window.c
 
 OBJ = $(SRC:.c=.o)
 

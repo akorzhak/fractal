@@ -89,8 +89,8 @@ void	draw_julia(t_ptr *p)
 	(p->z_real * p->z_real + p->z_imag * p->z_imag) < p->infinit_border)
 	{
 		temp = p->z_real * p->z_real - p->z_imag * p->z_imag;
-        p->z_imag = 2 * p->z_real * p->z_imag + p->c_imag;
-        p->z_real = temp + p->c_real;
+  		p->z_imag = 2 * p->z_real * p->z_imag + p->j_imag;
+  		p->z_real = temp + p->j_real;
 	}
 }
 
@@ -122,6 +122,7 @@ void	draw_burningship(t_ptr *p)
 
 void	draw_fractal(t_ptr *p)
 {
+	
     int x;
     int y;
 
@@ -151,7 +152,11 @@ void	draw_fractal(t_ptr *p)
 
 void	draw_image(t_ptr *p)
 {
+	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
+    p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
+    p->bpp /= 8;
 	draw_fractal(p);
 	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
+	put_description_to_window(p);
 	mlx_destroy_image(p->mlx, p->img);
 }

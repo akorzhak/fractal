@@ -33,25 +33,22 @@ int		define_fractal(char *name, t_ptr *p)
 
 void	init_color(t_ptr *p)
 {
-	p->col.r_freq = 0.01;
-	p->col.g_freq = 0.013;
-	p->col.b_freq = 0.016;
-	p->col.r_phase = 0.1;
-	p->col.g_phase = 0.2;
-	p->col.b_phase = 0.4;
-	p->col.center = 230;
-	p->col.delta = 25;
+	p->col.r_freq = 0.002;
+	p->col.g_freq = 0.00006;
+	p->col.b_freq = 0.00006;
+	p->col.r_phase = 0.0008;
+	p->col.g_phase = 0.00009;
+	p->col.b_phase = 0.00004;
+	p->col.center = 530;
+	p->col.delta = 4;
 	p->col.variant = 0;
 }
 
 void	init_ptr(t_ptr *p)
 {
 	p->mlx = mlx_init();
-	p->img = mlx_new_image(p->mlx, SIZE_X, SIZE_Y);
-    p->addr = mlx_get_data_addr(p->img, &(p->bpp), &(p->size_line), &(p->end));
-    p->bpp /= 8;
     p->iter_max = 100;
-	p->zoom = 1.0;
+    p->zoom = 1;
 	p->mx = 0.0;
 	p->my = 0.0;
 	p->infinit_border = 4.0;
@@ -60,7 +57,7 @@ void	init_ptr(t_ptr *p)
 
 void	init_fractal(t_ptr *p)
 {
-	if (p->fract_name == MANDELBROT)
+	if (p->fract_name == MANDELBROT || p->fract_name == BUFFALO)
 	{
     	p->max_real = 1.1;
     	p->min_imag = -1.2;
@@ -70,32 +67,27 @@ void	init_fractal(t_ptr *p)
     	p->max_real = 1.0;
     	p->min_imag = -1.6;
     }
+    else if (p->fract_name == JULIA)
+    {
+    	p->max_real = 2.2;
+    	p->min_imag = -1.6;
+    }
     else
     {
-    	p->max_real = 2.6;
-    	p->min_imag = -2.0;
+    	p->max_real = 1.8;
+    	p->min_imag = -1.6;
     }
     p->min_real = -2.1;
     p->max_imag = p->min_imag + (p->max_real - p->min_real) * SIZE_Y / SIZE_X;
+    p->j_real = -0.4;
+	p->j_imag = 0.6;
 }
 
 void	init_factors(int x, int y, t_ptr *p)
-{
-	
+{	
 	p->iter = 0;
-	if (p->fract_name == JULIA)
-	{
-		p->c_imag = 0.27015;
-		p->c_real = -0.7;
-		p->z_real = 1.5 * (x - SIZE_X / 2) / (0.5 * p->zoom * SIZE_X) + p->mx;
-        p->z_imag = 1.0 * (y - SIZE_Y / 2) / (0.5 * p->zoom * SIZE_Y) + p->my;
-	}
-	else
-	{	//p->c_imag = p->max_imag - y * (p->max_imag - p->min_imag) / (SIZE_Y - 1);
-		//p->c_real = p->min_real + x * (p->max_real - p->min_real) / (SIZE_X - 1);
-		p->c_imag = (y - SIZE_Y / 2) * 4 / SIZE_Y * p->zoom + p->my;
-		p->c_real = (x - SIZE_X / 2) * 4 / SIZE_X * p->zoom + p->mx;
-		p->z_real = p->c_real;
-		p->z_imag = p->c_imag;
-	}
+	p->c_imag = p->max_imag - y * (p->max_imag - p->min_imag) / (SIZE_Y - 1) + p->my;
+	p->c_real = p->min_real + x * (p->max_real - p->min_real) / (SIZE_X - 1) + p->mx;
+	p->z_real = p->c_real;
+	p->z_imag = p->c_imag;
 }

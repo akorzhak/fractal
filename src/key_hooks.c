@@ -4,17 +4,17 @@
 
 static void 	change_color1(t_ptr *p)
 {
-	if (p->col.variant = 2)
+	if (p->col.variant == 2)
 	{
-		p->col.r_freq = 0.3;
-		p->col.g_freq = 0.3;
-		p->col.b_freq = 0.3;
-		p->col.r_phase = 2;
-		p->col.g_phase = 0;
-		p->col.b_phase = 4;
+		p->col.r_freq = 0.0002;
+		p->col.g_freq = 0.012;
+		p->col.b_freq = 0.00812;
+		p->col.r_phase = 0.01;
+		p->col.g_phase = 0.002;
+		p->col.b_phase = 0.04;
+		p->col.center = 200;
+		p->col.delta = 2;
 		p->col.variant = 3;
-		p->col.center = 108;
-		p->col.delta = 152;
 	}
 	else
 		init_color(p);
@@ -24,19 +24,26 @@ static void		change_color(t_ptr *p)
 {
 	if (p->col.variant == 0)
 	{
-		p->col.r_phase = 1;
-		p->col.g_phase = 2;
-		p->col.b_phase = 4;
+		p->col.r_freq = 0.00002;
+		p->col.g_freq = 0.006;
+		p->col.b_freq = 0.000206;
+		p->col.r_phase = 0.002;
+		p->col.g_phase = 0.009;
+		p->col.b_phase = 0.04;
+		p->col.center = 430;
+		p->col.delta = 2;
 		p->col.variant = 1;
 	}
-	else if (p->col.variant = 1)
+	else if (p->col.variant == 1)
 	{
-		p->col.r_freq = 0.2;
-		p->col.g_freq = 0.2;
-		p->col.b_freq = 0.2;
-		p->col.r_phase = 0;
-		p->col.g_phase = 2;
-		p->col.b_phase = 4;
+		p->col.r_freq = 0.002;
+		p->col.g_freq = 0.00003;
+		p->col.b_freq = 0.0006;
+		p->col.r_phase = 0.02;
+		p->col.g_phase = 0.002;
+		p->col.b_phase = 0.004;
+		p->col.center = 830;
+		p->col.delta = 2;
 		p->col.variant = 2;
 	}
 	else
@@ -45,20 +52,43 @@ static void		change_color(t_ptr *p)
 
 static void		move_image(int key, t_ptr *p)
 {
-	key == 126 ? p->my -= 0.1 * p->zoom : 0;
-	key == 125 ? p->my += 0.1 * p->zoom : 0;
-	key == 124 ? p->mx += 0.1 * p->zoom : 0;
-	key == 123 ? p->mx -= 0.1 * p->zoom : 0;
+	if (key == 126)
+	{
+		(p->zoom >= 1) ? p->my -= 0.1 / p->zoom : 0;
+		(p->zoom < 1) ? p->my -= 0.1 * p->zoom : 0;
+
+	}
+	else if (key == 125)
+	{
+		(p->zoom >= 1) ? p->my += 0.1 / p->zoom : 0;
+		(p->zoom < 1) ? p->my += 0.1 * p->zoom : 0;
+	}
+	else if (key == 124)
+	{
+		(p->zoom >= 1) ? p->mx += 0.1 / p->zoom : 0;
+		(p->zoom < 1) ? p->mx += 0.1 * p->zoom : 0;
+	}
+	else if (key == 123)
+	{
+		(p->zoom >= 1) ? p->mx -= 0.1 / p->zoom : 0;
+		(p->zoom < 1) ? p->mx -= 0.1 * p->zoom : 0;
+	}
 }
 
 static void		change_fractal(int key, t_ptr *p)
 {
-	key == 46 ? p->frac_name = MANDELBROT : 0;
-	key == 38 ? p->frac_name = JULIA : 0;
-	key == 3 ? p->frac_name = BUFFALO : 0; //f
-	key == 17 ? p->frac_name = TRICORN : 0;
-	key == 2 ? p->frac_name = DROP : 0;
-	key == 11 ? p->frac_name = BURNINGSHIP : 0;
+	key == 46 ? p->fract_name = MANDELBROT : 0;
+	key == 38 ? p->fract_name = JULIA : 0;
+	key == 3 ? p->fract_name = BUFFALO : 0;
+	key == 17 ? p->fract_name = TRICORN : 0;
+	key == 2 ? p->fract_name = DROP : 0;
+	key == 11 ? p->fract_name = BURNINGSHIP : 0;
+	init_fractal(p);
+}
+
+void 			reset_changes(t_ptr *p)
+{
+	init_ptr(p);
 	init_fractal(p);
 }
 
@@ -71,9 +101,10 @@ int				key_hook(int key, t_ptr *p)
 	}
 	(key >= 2 && key <= 46) ? change_fractal(key, p) : 0;
 	(key >= 123 && key <= 126) ? move_image(key, p) : 0;
-	key == 56 ? change_color(p) : 0; //enter
-	key == 69 && p->iter_max < 500 ? p->iter_max += 1 : 0;
-	key == 78 && p->iter_max > 30 ? p->iter_max -= 1 : 0;
+	key == 36 ? change_color(p) : 0;
+	key == 69 && p->iter_max < 500 ? p->iter_max += 20 : 0;
+	key == 78 && p->iter_max > 30 ? p->iter_max -= 20 : 0;
+	key == 49 ? reset_changes(p) : 0;
 	draw_image(p);
 	return (0);
 }

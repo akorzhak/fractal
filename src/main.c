@@ -37,8 +37,8 @@ int		main(int argc, char **argv)
 	}
 	else
 	{
-		display_error_message("Usage: ./fractol\
-		[mandelbrot/julia/burningship/buffalo/tricorn/drop]\n");
+		display_message("Usage: ./fractol\
+[mandelbrot/julia/burningship/buffalo/tricorn/drop]\n");
 	}
 	return (0);
 }

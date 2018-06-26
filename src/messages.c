@@ -17,3 +17,9 @@ void	display_error_message(char *message)
 	perror(message);
 	exit(1);
 }
+
+void	display_message(char *message)
+{
+	ft_putstr(message);
+	exit(0);
+}

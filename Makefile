@@ -44,7 +44,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIBDIR)
-	@cp $(LIBFT) $(NAME)
 	@$(C) $(CFLAG) -o $(NAME) $(OBJ) $(LIBS) $(LINKS)
 	@echo fractol compilation is \done
 	@echo
